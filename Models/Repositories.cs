@@ -23,8 +23,8 @@ public interface HasId {
 public interface IRepository<T>
 {
     void Create(T item);
-    IEnumerable<T> Read();
-    T Read(int id);
+    IEnumerable<T> ReadAll();
+    T ReadOne(int id);
     void Update(T item);
     T Delete(int id);
 }
@@ -39,11 +39,11 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
         ls[new Random().Next()] = item;
     }
     
-    public IEnumerable<T> Read(){
+    public IEnumerable<T> ReadAll(){
         return ls.Values;
     }
     
-    public T Read(int id){
+    public T ReadOne(int id){
         return ls[id];
     }
     

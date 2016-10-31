@@ -19,5 +19,6 @@ public class Post : HasId
     public Post() {
         Id = new Random().Next();
     }
-    // public Blog Blog { get; set; }
+    public Blog Blog { get; set; }
+
 }
