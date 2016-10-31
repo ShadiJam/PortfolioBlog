@@ -9,11 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 public class BlogController : Controller 
 {
-    public IActionResult Get(){
-       
+    public IActionResult get() {
+        return View();
+    }
+    public IActionResult getAll() {
         return View();
     }
 }
+
 
 
 

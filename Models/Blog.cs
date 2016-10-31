@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 public interface IBlog {
     void add(Post p);
     IEnumerable<Post> getAll();
+    Post get(int id);
+ /*   IEnumerable<Post> TakeLast(int n); */
 }
 
 public class Blog : IBlog {
@@ -38,5 +40,24 @@ public class Blog : IBlog {
     public IEnumerable<Post> getAll() {
         return posts;
     }
+    public Post get(int id) {
+        return posts.First(p => p.PostId == id);
+    }
+/*    public IEnumerable<T> TakeLast<T>(IEnumerable<T> posts, int n) {
+        if(posts == null)
+            throw new ArgumentNullException("posts");
+        if(n < 0)
+            throw new ArgumentOutOfRangeException("n", "n must be 0 or greater");
+
+        LinkedList<T> temp = new LinkedList<T>();
+        
+        foreach(var post in posts){
+            temp.AddLast(post);
+            if(temp.Count > 5)
+                temp.RemoveFirst();
+        }
+        return temp;
+    } */
 }
+
 
