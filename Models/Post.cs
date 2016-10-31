@@ -10,12 +10,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 public class Post 
 {
     // sometimes, people use Guids
-    public int Id : HasId { get; set; } 
+    public int PostId { get; set; }
     // [required] - we can require some attributes - throw errors if the model isn't valid
     public string Title { get; set; }
     public string Content { get; set; } 
     // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime createdAt { get; set; } 
+    public Post() {
+        PostId = new Random().Next();
+    }
     // public Blog Blog { get; set; }
 }
     /*
