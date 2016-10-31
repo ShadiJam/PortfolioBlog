@@ -9,18 +9,20 @@ using Microsoft.EntityFrameworkCore;
 
 public class BlogController : Controller
 {
-    private DB db;
-    public BlogController(DB db) {
-        this.db = db;
+    private IRepository<Blog> blogs;
+    private IRepository<Post> posts;
+    public BlogController(IRepository<Blog> blogs, IRepository<Post> posts) {
+        this.blogs = blogs;
+        this.posts = posts;
     }
 
     [HttpGet]
     public IActionResult Get() =>
-        View(db.Blogs.OrderBy(b => b.Title).ToList());
+        View(posts.Read().OrderByDescending(b => b.createdAt).Take(5));
 
-    [HttpGetAttribute("{id}")]
+    [HttpGet("{id}")]
     public IActionResult Get(int id) {
-        Blog item = db.Blogs.First(b => b.BlogId == id);
+        Post item = posts.Read(id);
         if(item == null){
             return NotFound();
         }
@@ -28,22 +30,21 @@ public class BlogController : Controller
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody]Blog b){
-        if(b == null){
+    public IActionResult Post([FromBody]Post p){
+        if(p == null){
             return BadRequest();
         }
-        db.Blogs.Add(b);
-        db.SaveChanges();
-        return View(b);
+        posts.Create(p);
+        return View(p);
     }
 
-  [HttpDeleteAttribute("{id}")]
+  [HttpDelete("{id}")]
   public IActionResult Delete(int id)
   {
-      var b = db.Blogs.First(x => x.BlogId == id);
-      if (b == null)
+      var p = posts.Read(id);
+      if (p == null)
         return NotFound();
-      db.Blogs.Remove(b);
+      posts.Delete(id);
       return new NoContentResult();
   }
 }

@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 
 public interface HasId {
-    int GetId();
+    int Id { get; set; }
 }
 public interface IRepository<T>
 {
@@ -30,7 +30,7 @@ public interface IRepository<T>
 }
 
 
-public class Repo<T> : IRepository<T> where T : HasId {
+public class Repo<T> : IRepository<T> where T : class, HasId {
 
     private static ConcurrentDictionary<int, T> ls = new ConcurrentDictionary<int, T>();
     
@@ -48,7 +48,7 @@ public class Repo<T> : IRepository<T> where T : HasId {
     }
     
     public void Update(T item){
-        ls[item.GetId()] = item;
+        ls[item.Id] = item;
     }
     
     public T Delete(int id){

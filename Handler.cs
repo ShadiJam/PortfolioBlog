@@ -39,7 +39,7 @@ public class Handler {
 
         // services.AddDbContext<DB>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-        services.AddDbContext<DB>(options => options.UseInMemoryDatabase());
+        // services.AddDbContext<DB>(options => options.UseInMemoryDatabase());
 
         // services.AddIdentity<User, IdentityRole>()
         //     .AddEntityFrameworkStores<DB>()
@@ -48,11 +48,9 @@ public class Handler {
         // services.AddApplicationInsightsTelemetry(Configuration);
         services.AddMvc();
 
-        services.AddSingleton<IRepository<Post>>();
-    //    services.AddSingleton<IRepository<Blog>, blogs>();
-        // services.AddTransient<IRepository<Post>, PostRepo>();
-        // services.AddPost<IRepository<Post>, PostRepo>();
-
+        services.AddSingleton<IRepository<Post>, Repo<Post>>();
+        services.AddSingleton<IRepository<Blog>, Repo<Blog>>();
+    
         // Inject an implementation of ISwaggerProvider with defaulted settings applied
         services.AddSwaggerGen();
 
@@ -61,7 +59,7 @@ public class Handler {
             options.SingleApiVersion(new Info
             {
                 Version = "v1",
-                Title = "Simple DB Example",
+                Title = "Simple posts Example",
                 Description = "A sample boilerplate for .NET Core"
             });
             options.IgnoreObsoleteActions();
@@ -70,7 +68,7 @@ public class Handler {
         });
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger, DB db) {
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger) {
         // logger.AddConsole(Configuration.GetSection("Logging"));
         logger.AddDebug();
 
