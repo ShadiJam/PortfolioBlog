@@ -3,8 +3,8 @@
 <h1> 
 
 <div class="grid grid-2-400 grid-4-800">
-    @foreach(var post in @Model.GetAll()) {
-        @Html.Partial("Get", post)
+    @foreach(var post in @Model.ReadAll()) {
+        @Html.Partial("ReadOne", post)
     }  
 </div>   
 
