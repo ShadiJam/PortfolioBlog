@@ -19,8 +19,13 @@ public static class Seed
         {
             return; // DB has been seeded already
         }
+        if (db.Blogs.Any())
+        {
+            return;
+        }
         
         List<Post> posts = new List<Post>();
+        List<Blog> blogs = new List<Blog>();
         // Blog mine = new Blog {Url = "mkeas.org"};
         // db.Blogs.Add(mine);
         for(var i = 0; i < 10; i++){

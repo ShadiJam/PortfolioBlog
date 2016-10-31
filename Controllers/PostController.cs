@@ -123,19 +123,19 @@ DELETE /api/todo/{id}	Delete an item.	        None	                None
 // additionally, can have /api/[controller]/[action]
 public class PostController : Controller
 {
-    private DB db;
+    private PostRepo postrepo;
 
-    public PostController(DB db){
-        this.db = db;
+    public PostController(IRepository<Post> postrepo){
+        this.postrepo = postrepo;
     }
 
     [HttpGet]
     public IActionResult Get() =>
-        Ok(db.Posts.OrderBy(p => p.Title).ToList());
+        Ok(postrepo.Posts.OrderBy(p => p.Title).ToList());
 
     [HttpGet("{id}", Name = "GetPost")] // can include an optional name for the route
     public IActionResult Get(int id) {
-        Post item = db.Posts.First(p => p.PostId == id);
+        Post item = postrepo.Posts.First(p => p.PostId == id);
         if(item == null){
             return NotFound();
         }
@@ -144,7 +144,7 @@ public class PostController : Controller
 
     [HttpGet("sql/{id}")]
     public IActionResult SQL(int id) {
-        return Ok(db.Posts.FromSql($"select * from dbo.Post where PostId = {id}").ToList()); // only works with SQL, not in-memory
+        return Ok(postrepo.Posts.FromSql($"select * from dbo.Post where PostId = {id}").ToList()); // only works with SQL, not in-memory
     }
 
     [HttpPost]
@@ -152,8 +152,8 @@ public class PostController : Controller
         if(p == null){
             return BadRequest();
         }
-        db.Posts.Add(p);
-        db.SaveChanges();
+        postrepo.Posts.Add(p);
+        postrepo.SaveChanges();
         return Ok(p);
         // optionally, be more formal, and point to the get/{id} with a 201 code
         // tells a client where t grab the most recent data, and sends 'p' along with the 
@@ -175,22 +175,22 @@ public class PostController : Controller
     public IActionResult Put(int id, [FromBody] Post newPost){
         if(newPost == null || newPost.PostId != id)
             return BadRequest();
-        var post = db.Posts.First(p => p.PostId == id);
+        var post = postrepo.Posts.First(p => p.PostId == id);
         if(post == null)
             return NotFound();
-        db.Posts.Remove(post);
-        db.Posts.Add(newPost);
-        db.SaveChanges();
+        postrepo.Posts.Remove(post);
+        postrepo.Posts.Add(newPost);
+        postrepo.SaveChanges();
         return new NoContentResult(); // sends back a 204 Ok. (no content to be sent back to client)
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var p = db.Posts.First(x => x.PostId == id);
+        var p = postrepo.Posts.First(x => x.PostId == id);
         if (p == null)
             return NotFound();
-        db.Posts.Remove(p);
+        postrepo.Posts.Remove(p);
         return new NoContentResult(); // sends back a 204 Ok. (no content to be sent back to client)
     }
 
