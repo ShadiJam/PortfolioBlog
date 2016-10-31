@@ -5,14 +5,21 @@ using System.Linq;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-[Route("/blog")]
+[Route("/Blog")]
 
 public class BlogController : Controller 
 {
-    public IActionResult get() {
-        return View();
+/*[HttpGet("/Get/{id}")]
+    public IActionResult get(int id) {
+          Post item = Posts.First(p => p.PostId == id);
+        if(item == null){
+            return NotFound();
+        }
+        return View(item); 
     }
-    public IActionResult getAll() {
+   */ 
+[HttpGet("/GetAll")]
+    public IActionResult GetAll() {
         return View();
     }
 }

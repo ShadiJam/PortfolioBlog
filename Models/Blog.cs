@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 public interface IBlog {
-    void add(Post p);
-    IEnumerable<Post> getAll();
-    Post get(int id);
+    void Add(Post p);
+    IEnumerable<Post> GetAll();
+ //   Post Get(int id);
  /*   IEnumerable<Post> TakeLast(int n); */
 }
 
@@ -34,16 +34,16 @@ public class Blog : IBlog {
         posts.Add(new Post { Title = "Blog 10", Content = "This is the tenth blog post - I will be updating content shortly"});
         int BlogId = new Random().Next();
     }
-    public void add(Post p){
+    public void Add(Post p){
         posts.Add(p);
     }
-    public IEnumerable<Post> getAll() {
+    public IEnumerable<Post> GetAll() {
         return posts;
     }
-    public Post get(int id) {
-        return posts.First(p => p.PostId == id);
+ /*   public Post Get(int id) {
+        return post;
     }
-/*    public IEnumerable<T> TakeLast<T>(IEnumerable<T> posts, int n) {
+   public IEnumerable<T> TakeLast<T>(IEnumerable<T> posts, int n) {
         if(posts == null)
             throw new ArgumentNullException("posts");
         if(n < 0)

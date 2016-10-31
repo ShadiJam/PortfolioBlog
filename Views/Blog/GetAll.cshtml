@@ -1,0 +1,13 @@
+@model Blog
+
+<h1> 
+
+<div class="grid grid-2-400 grid-4-800">
+    @foreach(var post in @Model.GetAll()) {
+        @Html.Partial("Get", post)
+    }  
+</div>   
+
+</h1>
+
+<p>Want to create a <a href="/posts/new">new post</a>?</p>
