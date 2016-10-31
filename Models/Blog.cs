@@ -9,16 +9,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 
 
-public class Blog : HasId {
+public class Blog 
+{
    
-    public int Id { get; set; }
+    public int BlogId { get; set; }
     public string Title { get; set; }
-    
     public List<Post> posts = new List<Post>();
     
-    public Blog(){
-        int BlogId = new Random().Next();
-    }
+}
  /*   public Post Get(int id) {
         return post;
     }
@@ -37,6 +35,6 @@ public class Blog : HasId {
         }
         return temp;
     } */
-}
+
 
 

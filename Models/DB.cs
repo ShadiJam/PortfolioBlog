@@ -45,5 +45,5 @@ public class DB : DbContext {
 
     // public DbSet<Blog> Blogs { get; set; }
     public DbSet<Post> Posts { get; set; }
-    public DbSet<Blog> Blogs { get; set; }
+ //   public DbSet<Blog> Blogs { get; set; }
 }

@@ -7,20 +7,16 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-public class Post
+public class Post 
 {
     // sometimes, people use Guids
-    public int PostId { get; set; }
+    public int Id : HasId { get; set; } 
     // [required] - we can require some attributes - throw errors if the model isn't valid
     public string Title { get; set; }
     public string Content { get; set; } 
     // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime createdAt { get; set; } 
     // public Blog Blog { get; set; }
-
-    public Post() {
-        PostId = new Random().Next();
-    }
 }
     /*
     other attributes
