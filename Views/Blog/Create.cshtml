@@ -1,0 +1,12 @@
+@model Post
+<form asp-controller="Post" asp-action="Create">
+    <p>
+        <label asp-for="Title"></label>
+        <input asp-for="Title"/>
+    </p>
+    <p>
+        <label asp-for="Content"></label>
+        <input asp-for="Content"/>
+    </p>
+    <button type="submit">Save</button>
+</form>

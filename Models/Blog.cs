@@ -27,8 +27,7 @@ public class Blog : HasId
         posts.Add(new Post { Id = 8, Title = "Post 8", Content = "Post 8 Content",});
         posts.Add(new Post { Id = 9, Title = "Post 9", Content = "Post 9 Content",});
         posts.Add(new Post { Id = 10, Title = "Post 10", Content = "Post 10 Content",});
-    }
-    
+    }    
 }
 
 

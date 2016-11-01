@@ -1,17 +1,3 @@
-/*
-The following is an IRepository pattern. We write our logic to do CRUD operations on a model 
-(i.e. in the database, in memory, etc). From our controllers, we can feed the IRepository to
-each controller via Dependency Injection:
-
-services.AddSingleton<IRepository<Post>, PostRepo>();
-
-Then each Controller can opt to accept it as an input:
-
-public PostController(DB db, IRepository<Post> r){
-    ...
-}
-
-*/
 
 using System;
 using System.Collections.Generic;
@@ -55,6 +41,14 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
         T item;
         ls.TryRemove(id, out item);
         return item;
+    }
+
+    public IEnumerable<T> getAll(){
+        return (ls.Values);
+    }
+
+    public T get(int id){
+        return ls[id];
     }
 
 }

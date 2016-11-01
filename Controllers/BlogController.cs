@@ -9,26 +9,25 @@ using Microsoft.EntityFrameworkCore;
 
 public class BlogController : Controller
 {
-    private IRepository<Blog> blogs;
-    private IRepository<Post> posts;
-    public BlogController(IRepository<Blog> blogs, IRepository<Post> posts) {
+    private List<Blog> blogs;
+    private List<Post> posts;
+    public BlogController(List<Blog> blogs, List<Post> posts) {
         this.blogs = blogs;
         this.posts = posts;
     }
 
-
-    [HttpGet]
-    public IActionResult ReadAll() =>
-        View();
-        //posts.ReadOne.OrderByDescending(p => p.createdAt).Take(5));
+    [HttpGet("/blog/")]
+    public IActionResult ReadAll() {
+       return View(posts.getAll());
+    }
 
     [HttpGet("/post/{id}")]
     public IActionResult ReadOne(int id) {
-        Post item = posts.ReadOne(id);
-        if(item == null){
+        var post = posts.Get(id);
+        if(post == null){
             return NotFound();
         }
-        return View(item);
+        return View(post);
     }
 
     [HttpGet("/post/new")]
@@ -36,29 +35,29 @@ public class BlogController : Controller
         return View();
     }
 
- //   [HttpPostAttribute("new")]
-  //  [ValidateAntiForgeryToken]
- //   public IActionResult HandleCreate([FromForm] Post p){
- //       p.addNew(new Post { Id = 1, Title = "Post 1", Content = "Post 1 Content",});
-  //      return RedirectToAction("ReadAll");
- //   }
+    [HttpPostAttribute("new")]
+    [ValidateAntiForgeryToken]
+    public IActionResult HandleCreate([FromForm] Post p){
+        p.add(new Post { Id = 1, Title = "Post 1", Content = "Post 1 Content",});
+        return RedirectToAction("ReadAll");
+    }
 
     [HttpPost("/post/edit/{id}")]
     public IActionResult Edit([FromBody]Post p){
         if(p == null){
             return BadRequest();
         }
-        posts.Create(p);
+        posts.Add(p);
         return View(p);
     }
 
   [HttpDelete("/post/delete/{id}")]
   public IActionResult Delete(int id)
   {
-      var p = posts.ReadOne(id);
+      var p = posts.Get(id);
       if (p == null)
         return NotFound();
-      posts.Delete(id);
+      posts.Remove(p);
       return RedirectToAction("ReadAll");
   }
 }
