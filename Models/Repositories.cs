@@ -54,7 +54,7 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
 
 }
 
-public class PostRepo: Repo<Post> {
+public class PostRepo : Repo<Post> {
     public PostRepo() : base(){}
     public IEnumerable<Post> ReadLast(int n) {
         return ls.Values.OrderByDescending(b => b.createdAt).Take(n);

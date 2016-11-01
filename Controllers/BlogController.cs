@@ -5,20 +5,19 @@ using System.Linq;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-[Route("/blog/")]
+
 
 public class BlogController : Controller
 {
     private IRepository<Blog> blogs; 
-    
     private PostRepo posts;
     public BlogController(IRepository<Blog> blogs, PostRepo posts) {
         this.blogs = blogs;
         this.posts = posts;
     }
-    
-    
-    public IActionResult Get() => 
+    [Route("blog")]
+    [HttpGet]
+    public IActionResult GetAll() => 
         View(posts.ReadLast(5));
        
 
@@ -33,17 +32,23 @@ public class BlogController : Controller
 
     [HttpPost]
   
-    public IActionResult Post([FromBody]Post p){
+    public IActionResult Edit([FromForm]Post p){
         if(p == null){
             return BadRequest();
         }
         posts.Create(p);
         return View(p);
     }
+    
+    [HttpPost("{new}")]
 
-  [HttpDelete("{id}")]
-  public IActionResult Delete(int id)
-  {
+    public IActionResult Create([FromForm]Post p){
+        return View();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
       var p = posts.ReadOne(id);
       if (p == null)
         return NotFound();
