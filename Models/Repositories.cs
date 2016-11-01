@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Linq;
 
 public interface HasId {
     int Id { get; set; }
@@ -12,13 +13,13 @@ public interface IRepository<T>
     IEnumerable<T> ReadAll();
     T ReadOne(int id);
     void Update(T item);
-    T Delete(int id);
+    T Delete(int id); 
 }
 
 
 public class Repo<T> : IRepository<T> where T : class, HasId {
 
-    private static ConcurrentDictionary<int, T> ls = new ConcurrentDictionary<int, T>();
+    public static ConcurrentDictionary<int, T> ls = new ConcurrentDictionary<int, T>();
     
     public void Create(T item){
         // item.PostId = Guid.NewGuid(); // to uncommment, will have to change PostId to Guid in the Models
@@ -51,4 +52,11 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
         return ls[id];
     }
 
+}
+
+public class PostRepo: Repo<Post> {
+    public PostRepo() : base(){}
+    public IEnumerable<Post> ReadLast(int n) {
+        return ls.Values.OrderByDescending(b => b.createdAt).Take(n);
+    }
 }

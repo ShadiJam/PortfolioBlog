@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 public class Blog : HasId
 {
-   
     public int Id { get; set; }
     public string Title { get; set; }
     public List<Post> posts = new List<Post>();

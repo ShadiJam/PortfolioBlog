@@ -16,33 +16,34 @@ public class Post : HasId
     public string Content { get; set; } 
     // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime createdAt { get; set; } 
-    public Blog Blog { get; set; }
-    private List<Post> posts = new List<Post>();
+   // public Blog Blog { get; set; }
+ //   private List<Post> posts = new List<Post>();
     public Post() {
         Id = new Random().Next();
-    }
-        public void add(Post p){
+        }
+    public List<Post> posts = new List<Post>();
+  /*      public void add(Post p){
         posts.Add(p);
-    }
+        }
     public IEnumerable<Post> getAll(){
         return (posts.OrderByDescending(p => p.createdAt).Take(5));
-    }
+        }
     public Post get(int id){
         return posts.First(p => p.Id == id);
-    }
+        }
     public Post update(int id, Post p){
         Post toUpdate = posts.First(x => x.Id == id);
         if(toUpdate != null){
             posts.Remove(toUpdate);
             posts.Add(p);
             return p;
-        }
+            }
         return null;
-    }
+        }
     public void delete(int id){
         Post p = posts.First(x => x.Id == id);
         if(p != null){
             posts.Remove(p);
-        }
-    }
+            }
+        } */
 }

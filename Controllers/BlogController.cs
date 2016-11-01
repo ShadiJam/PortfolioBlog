@@ -9,58 +9,48 @@ using Microsoft.EntityFrameworkCore;
 
 public class BlogController : Controller
 {
-    private List<Blog> blogs;
-    private List<Post> posts;
-    public BlogController(List<Blog> blogs, List<Post> posts) {
+    private IRepository<Blog> blogs; 
+    private PostRepo posts;
+    public BlogController(IRepository<Blog> blogs, PostRepo posts) {
         this.blogs = blogs;
         this.posts = posts;
     }
+    
+    
+    public IActionResult Get() => 
+        View(posts.ReadLast(5));
+       
 
-    [HttpGet("/blog/")]
-    public IActionResult ReadAll() {
-       return View(posts.getAll());
-    }
-
-    [HttpGet("/post/{id}")]
-    public IActionResult ReadOne(int id) {
-        var post = posts.Get(id);
-        if(post == null){
+    [HttpGet("{id}")]
+    public IActionResult Get(int id) {
+        Post item = posts.ReadOne(id);
+        if(item == null){
             return NotFound();
         }
-        return View(post);
+        return View(item);
     }
 
-    [HttpGet("/post/new")]
-    public IActionResult Create() {
-        return View();
-    }
-
-    [HttpPostAttribute("new")]
-    [ValidateAntiForgeryToken]
-    public IActionResult HandleCreate([FromForm] Post p){
-        p.add(new Post { Id = 1, Title = "Post 1", Content = "Post 1 Content",});
-        return RedirectToAction("ReadAll");
-    }
-
-    [HttpPost("/post/edit/{id}")]
-    public IActionResult Edit([FromBody]Post p){
+    [HttpPost]
+  
+    public IActionResult Post([FromBody]Post p){
         if(p == null){
             return BadRequest();
         }
-        posts.Add(p);
+        posts.Create(p);
         return View(p);
     }
 
-  [HttpDelete("/post/delete/{id}")]
+  [HttpDelete("{id}")]
   public IActionResult Delete(int id)
   {
-      var p = posts.Get(id);
+      var p = posts.ReadOne(id);
       if (p == null)
         return NotFound();
-      posts.Remove(p);
-      return RedirectToAction("ReadAll");
-  }
+      posts.Delete(id);
+      return new NoContentResult();
+  } 
 }
+
 
 
 
