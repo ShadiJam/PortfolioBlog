@@ -22,6 +22,8 @@ public class Post : HasId
         Id = new Random().Next();
         }
     public List<Post> posts = new List<Post>();
+
+    }
   /*      public void add(Post p){
         posts.Add(p);
         }
@@ -46,4 +48,4 @@ public class Post : HasId
             posts.Remove(p);
             }
         } */
-}
+

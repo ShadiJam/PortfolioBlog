@@ -1,13 +1,13 @@
-@model Post
+@model PostRepo
 <hr>
 
-<div class="grid grid-2-400 grid-4-800">
-    @foreach(var post in @Model.ReadAll()){
-        @Html.Partial("ReadOne", post)
+<div class="GetAll">
+    @foreach(var post in @Model.ReadAll){
+        @Html.Partial("Get", post)
     }
 </div>
 
 </hr>
 
-<p> Want to creat a <a href="/blog/post/new">new post</a>?</p>
+<p> Want to creat a <a href="/blog/create/new">new post</a>?</p>
 

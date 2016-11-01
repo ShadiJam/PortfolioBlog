@@ -5,7 +5,7 @@ using System.Linq;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-
+[Route("blog")]
 
 public class BlogController : Controller
 {
@@ -15,7 +15,7 @@ public class BlogController : Controller
         this.blogs = blogs;
         this.posts = posts;
     }
-    [Route("blog")]
+    
     [HttpGet]
     public IActionResult GetAll() => 
         View(posts.ReadLast(5));
@@ -32,15 +32,15 @@ public class BlogController : Controller
 
     [HttpPost]
   
-    public IActionResult Edit([FromForm]Post p){
-        if(p == null){
+    public IActionResult Edit([FromForm]int id){
+        Post item = posts.ReadOne(id);
+        if(id == 0){
             return BadRequest();
         }
-        posts.Create(p);
-        return View(p);
+        return View();
     }
     
-    [HttpPost("{new}")]
+    [HttpPost("create/new")]
 
     public IActionResult Create([FromForm]Post p){
         return View();
