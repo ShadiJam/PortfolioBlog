@@ -14,6 +14,7 @@ public class Blog : HasId
     public int Id { get; set; }
     public string Title { get; set; }
     public List<Post> posts = new List<Post>();
+
     public Blog() {
         Id = new Random().Next();
         posts.Add(new Post { Id = 1, Title = "Post 1", Content = "Post 1 Content",});

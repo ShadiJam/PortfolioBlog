@@ -47,7 +47,7 @@ public class Handler {
 
         // services.AddApplicationInsightsTelemetry(Configuration);
         services.AddMvc();
-
+        
         services.AddSingleton<IRepository<Post>, PostRepo>();
         services.AddSingleton<IRepository<Blog>, Repo<Blog>>();
     

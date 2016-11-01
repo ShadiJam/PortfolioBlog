@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 public class BlogController : Controller
 {
     private IRepository<Blog> blogs; 
+    
     private PostRepo posts;
     public BlogController(IRepository<Blog> blogs, PostRepo posts) {
         this.blogs = blogs;
