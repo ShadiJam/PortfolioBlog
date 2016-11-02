@@ -1,8 +1,8 @@
-@model Post
+@model IEnumerable<Post>
 
 Edit Post
 
-<form asp-controller="Post" asp-action="Edit">
+<form asp-controller="Put" asp-action="Edit">
     <div>
         <label asp-for="Title"/></label>
         <input asp-for="Title"/>
