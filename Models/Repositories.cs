@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 public interface HasId {
     int Id { get; set; }
@@ -51,12 +52,12 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
     public T get(int id){
         return ls[id];
     }
-
+    
 }
 
 public class PostRepo : Repo<Post> {
     public PostRepo() : base(){}
     public IEnumerable<Post> ReadLast(int n) {
         return ls.Values.OrderByDescending(b => b.createdAt).Take(n);
-    }
+        }
 }

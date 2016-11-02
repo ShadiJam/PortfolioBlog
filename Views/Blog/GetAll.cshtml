@@ -1,8 +1,8 @@
-@model PostRepo
+@model IEnumerable<Post>
 <hr>
 
 <div class="GetAll">
-    @foreach(var post in @Model.ReadAll){
+    @foreach(var post in @Model){
         @Html.Partial("Get", post)
     }
 </div>

@@ -22,11 +22,11 @@ public class Post : HasId
         Id = new Random().Next();
         }
     public List<Post> posts = new List<Post>();
-
-    }
-  /*      public void add(Post p){
+    public void Add(Post p){
         posts.Add(p);
-        }
+    }
+}
+/*
     public IEnumerable<Post> getAll(){
         return (posts.OrderByDescending(p => p.createdAt).Take(5));
         }

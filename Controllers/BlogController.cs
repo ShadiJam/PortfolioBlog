@@ -4,16 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Threading.Tasks;
 
 [Route("blog")]
 
 public class BlogController : Controller
 {
-    private IRepository<Blog> blogs; 
-    private PostRepo posts;
+    public IRepository<Blog> blogs; 
+    public PostRepo posts;
     public BlogController(IRepository<Blog> blogs, PostRepo posts) {
         this.blogs = blogs;
         this.posts = posts;
+    }
+    public void Add(Post p){
+        Add(p);
     }
     
     [HttpGet]
@@ -30,7 +37,7 @@ public class BlogController : Controller
         return View(item);
     }
 
-    [HttpPost]
+    [HttpPost("edit/{id}")]
   
     public IActionResult Edit([FromForm]int id){
         Post item = posts.ReadOne(id);
@@ -43,10 +50,11 @@ public class BlogController : Controller
     [HttpPost("create/new")]
 
     public IActionResult Create([FromForm]Post p){
+        Add(p);
         return View();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
       var p = posts.ReadOne(id);
@@ -54,7 +62,7 @@ public class BlogController : Controller
         return NotFound();
       posts.Delete(id);
       return new NoContentResult();
-  } 
+    }
 }
 
 
