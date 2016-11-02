@@ -19,10 +19,6 @@ public class BlogController : Controller
         this.blogs = blogs;
         this.posts = posts;
     }
-    public void Add(Post p){
-        Add(p);
-    }
-    
     [HttpGet]
     public IActionResult GetAll() => 
         View(posts.ReadLast(5));
@@ -50,7 +46,8 @@ public class BlogController : Controller
     [HttpPost("create/new")]
 
     public IActionResult Create([FromForm]Post p){
-        Add(p);
+        PostRepo posts = new PostRepo();
+        posts.Add(p);
         return View();
     }
 

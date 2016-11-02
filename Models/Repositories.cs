@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
@@ -10,10 +9,10 @@ public interface HasId {
 }
 public interface IRepository<T>
 {
-    void Create(T item);
+ //   void Create(T item);
     IEnumerable<T> ReadAll();
     T ReadOne(int id);
-    void Update(T item);
+//    void Update(T item);
     T Delete(int id); 
 }
 
@@ -25,6 +24,7 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
     public void Create(T item){
         // item.PostId = Guid.NewGuid(); // to uncommment, will have to change PostId to Guid in the Models
         ls[new Random().Next()] = item;
+ //       ls.Add<T>(item);
     }
     
     public IEnumerable<T> ReadAll(){
@@ -35,9 +35,10 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
         return ls[id];
     }
     
-    public void Update(T item){
-        ls[item.Id] = item;
-    }
+//    public void Update(T item){
+//        ls[item.Id] = item;
+        
+ //   }
     
     public T Delete(int id){
         T item;
@@ -60,4 +61,12 @@ public class PostRepo : Repo<Post> {
     public IEnumerable<Post> ReadLast(int n) {
         return ls.Values.OrderByDescending(b => b.createdAt).Take(n);
         }
+    public IEnumerable<Post> Add(Post p) {
+       List<Post> posts = new List<Post>();
+       ls[new Random().Next()] = p;
+       posts.Add(p);
+       return ls.Values;
+       
+    }
 }
+
